@@ -100,6 +100,27 @@ Returned data exactly reflects persisted webhook messages.
 
 The system validates authenticity using HMAC-SHA256.
 
+## 🔄 Webhook Processing Flow
+
+Client
+  │
+  │  POST /webhook
+  │  (JSON Body + X-Signature)
+  ▼
+FastAPI Webhook Endpoint
+  │
+  ├─ Read raw request body
+  ├─ Read X-Signature header
+  ├─ Compute HMAC-SHA256 using WEBHOOK_SECRET
+  ├─ Constant-time signature comparison
+  │
+  ├─ ❌ Invalid → 401 Unauthorized
+  │
+  └─ ✅ Valid
+        ├─ Store message in SQLite
+        └─ Return { "status": "ok" }
+
+
 Signature generation example:
 
 python -c "import hmac,hashlib; body=b'{\"message_id\":\"good1\",\"from\":\"+919876543210\",\"to\":\"+14155550100\",\"ts\":\"2025-01-15T10:00:00Z\"}'; print(hmac.new(b'testsecret', body, hashlib.sha256).hexdigest())"
@@ -150,6 +171,14 @@ Confirmed working endpoints inside container:
 ✔ Configuration strictly via environment variables
 
 ✔ Clear modular structure with separation of concerns
+
+## 🧠 Design Decisions
+
+- SQLite chosen for simplicity and zero external dependencies.
+- Raw request body is used for HMAC to avoid JSON re-serialization issues.
+- Constant-time comparison prevents timing attacks.
+- Dockerized setup ensures consistent runtime behavior across environments.
+
 
 🧰 Setup Used
 
