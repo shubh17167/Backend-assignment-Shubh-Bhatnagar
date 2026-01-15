@@ -15,11 +15,6 @@ Uvicorn
 SQLite
 
 
-## Architecture Flow
-Webhook → Signature Validation → Persistence → Query APIs
-
-
-
 Docker & Docker Compose
 
 ⚙️ Configuration (Environment Variables Only)
