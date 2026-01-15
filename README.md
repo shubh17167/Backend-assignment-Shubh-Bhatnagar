@@ -36,7 +36,9 @@ export WEBHOOK_SECRET=testsecret
 
 No hardcoded secrets are used anywhere in the codebase.
 
-📁 Project Structure
+## 📁 Project Structure
+
+```text
 lyftr-backend/
 │
 ├── app/
@@ -55,6 +57,7 @@ lyftr-backend/
 ├── requirements.txt       # Python dependencies
 ├── Makefile               # Convenience commands
 └── README.md              # Project documentation
+```
 
 
 
