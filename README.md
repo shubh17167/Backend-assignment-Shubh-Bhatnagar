@@ -40,20 +40,22 @@ No hardcoded secrets are used anywhere in the codebase.
 lyftr-backend/
 │
 ├── app/
-│   ├── main.py            # FastAPI app and routing
-│   ├── models.py          # DB schema + initialization
-│   ├── storage.py         # Persistence layer
+│   ├── main.py            # FastAPI app and route definitions
+│   ├── models.py          # Database schema and initialization
+│   ├── storage.py         # Persistence layer (SQLite interactions)
 │   ├── config.py          # Environment variable loading
 │   ├── logging_utils.py   # Reserved for structured logging
-│   ├── metrics.py         # Reserved for metrics
+│   └── metrics.py         # Reserved for metrics collection
 │
 ├── tests/                 # Reserved for test cases
-├── app.db                 # SQLite database
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── Makefile
-├── README.md
+│
+├── app.db                 # SQLite database file
+├── Dockerfile             # Docker image definition
+├── docker-compose.yml     # Docker Compose configuration
+├── requirements.txt       # Python dependencies
+├── Makefile               # Convenience commands
+└── README.md              # Project documentation
+
 
 
 Some files are intentionally kept minimal or empty to demonstrate future extensibility, which is standard backend practice.
