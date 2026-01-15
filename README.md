@@ -108,23 +108,27 @@ The system validates authenticity using HMAC-SHA256.
 
 ## 🔄 Webhook Processing Flow
 
+```text
 Client
-  │
-  │  POST /webhook
-  │  (JSON Body + X-Signature)
-  ▼
+  |
+  |  POST /webhook
+  |  (JSON body + X-Signature header)
+  v
 FastAPI Webhook Endpoint
-  │
-  ├─ Read raw request body
-  ├─ Read X-Signature header
-  ├─ Compute HMAC-SHA256 using WEBHOOK_SECRET
-  ├─ Constant-time signature comparison
-  │
-  ├─ ❌ Invalid → 401 Unauthorized
-  │
-  └─ ✅ Valid
-        ├─ Store message in SQLite
-        └─ Return { "status": "ok" }
+  |
+  |-- Read raw request body
+  |-- Read X-Signature header
+  |-- Compute HMAC-SHA256 using WEBHOOK_SECRET
+  |-- Constant-time signature comparison
+       |
+       |-- ❌ Invalid signature
+       |       → Respond 401 Unauthorized
+       |
+       |-- ✅ Valid signature
+               → Store message in SQLite
+               → Respond { "status": "ok" }
+```
+
 
 
 Signature generation example:
